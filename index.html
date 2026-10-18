@@ -7,229 +7,177 @@
 <meta name="description" content="学生主体の自主研究。宇宙輸送機の熱防護システム(TPS)を交換しやすくするための、固定・締結構造の研究計画です。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* ===== ここだけ書き換えれば色が変わります ===== */
+  /* ===== 配色(チラシC3案と共通) ===== */
   :root {
-    --bg: #f7f5f1;
-    --surface: #ffffff;
-    --text: #1d1f23;
-    --muted: #5d6169;
-    --line: #e2ddd4;
-    --accent: #c4501b;        /* 再突入の熱をイメージしたオレンジ */
-    --accent-soft: #fbe9df;
-    --accent-text: #ffffff;
-    --deep: #14202e;          /* ヒーロー背景 */
-    --deep-text: #eef1f5;
-    --deep-muted: #a9b4c2;
+    --ground: #ecebe6;      /* 地の色 */
+    --panel: #e2e0d9;       /* 囲みの色 */
+    --text: #262a27;
+    --body: #31352f;
+    --muted: #5c6159;
+    --rule: #c7c5bd;
+    --rule-strong: #262a27;
+    --accent: #5f6e55;      /* くすんだ緑 */
+    --band: #3f4641;        /* 上部の帯 */
+    --band-text: #f1efe9;
+    --band-muted: #b9bdb3;
+    --tile: #8d958a;
+    --tile-out: #c2b49a;    /* 交換対象の部品 */
+    --btn-text: #ffffff;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #101418;
-      --surface: #181d23;
-      --text: #e8eaed;
-      --muted: #a2a8b1;
-      --line: #2a3139;
-      --accent: #f07a3e;
-      --accent-soft: #2c1d15;
-      --accent-text: #1a0f08;
-      --deep: #0b1016;
-      --deep-text: #eef1f5;
-      --deep-muted: #9aa6b4;
+      --ground: #1d201e;
+      --panel: #262a27;
+      --text: #e7e5de;
+      --body: #d3d2cb;
+      --muted: #a3a89f;
+      --rule: #3a3f3b;
+      --rule-strong: #8d958a;
+      --accent: #9fb08f;
+      --band: #2c312d;
+      --btn-text: #1d201e;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #101418; --surface: #181d23; --text: #e8eaed; --muted: #a2a8b1;
-    --line: #2a3139; --accent: #f07a3e; --accent-soft: #2c1d15; --accent-text: #1a0f08;
-    --deep: #0b1016; --deep-text: #eef1f5; --deep-muted: #9aa6b4;
+    --ground: #1d201e; --panel: #262a27; --text: #e7e5de; --body: #d3d2cb;
+    --muted: #a3a89f; --rule: #3a3f3b; --rule-strong: #8d958a; --accent: #9fb08f;
+    --band: #2c312d; --btn-text: #1d201e;
   }
 
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
-    background: var(--bg);
+    background: var(--ground);
     color: var(--text);
-    font-family: "Noto Sans JP", system-ui, -apple-system, "Hiragino Sans", sans-serif;
+    font-family: "Noto Sans JP", "Noto Sans CJK JP", system-ui, -apple-system, "Hiragino Sans", sans-serif;
     font-size: 16px;
     line-height: 1.85;
     letter-spacing: 0.02em;
   }
   a { color: var(--accent); }
   .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
 
-  /* ---------- Hero ---------- */
-  .hero {
-    background: var(--deep);
-    color: var(--deep-text);
-    padding: 56px 0 48px;
-    position: relative;
-    overflow: hidden;
+  /* ---------- 上部の帯 ---------- */
+  .band {
+    background: var(--band);
+    color: var(--band-text);
+    padding: 36px 0 32px;
   }
-  .hero::after {           /* 下端の「熱」のグラデーション */
-    content: "";
-    position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
-    background: linear-gradient(90deg, #f2b33d, var(--accent), #8d2a10);
+  .band-top {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    font-size: 13px; letter-spacing: 0.1em; color: var(--band-muted);
   }
-  .tag {
-    display: inline-block;
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    color: var(--deep-muted);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 999px;
-    padding: 2px 12px;
-    margin-bottom: 20px;
+  .band-top strong { color: var(--band-text); font-weight: 700; }
+  .band-main {
+    display: flex; flex-wrap: wrap; gap: 24px 32px; align-items: flex-end;
+    margin-top: 26px;
   }
-  .hero h1 {
-    font-size: clamp(26px, 6.4vw, 40px);
-    line-height: 1.4;
-    margin: 0 0 14px;
+  .band-title { flex: 999 1 380px; min-width: 0; }
+  .label { font-size: 12.5px; letter-spacing: 0.12em; color: var(--band-muted); }
+  .band h1 {
+    margin: 6px 0 0;
+    font-size: clamp(24px, 5.6vw, 30px);
+    line-height: 1.45;
     font-weight: 700;
-    letter-spacing: 0.01em;
+    color: var(--band-text);
   }
-  .hero h1 em { font-style: normal; color: #f6a26d; }
-  .hero .sub { color: var(--deep-muted); margin: 0 0 22px; font-size: 15px; }
-  .hero .lead { margin: 0 0 28px; max-width: 34em; }
-  .byline { font-size: 14px; color: var(--deep-muted); margin: 0; }
-  .byline strong { color: var(--deep-text); font-weight: 500; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .br-wide { display: none; }
+  @media (min-width: 640px) { .br-wide { display: inline; } }
+  .fig { flex: 1 1 220px; display: flex; flex-direction: column; align-items: center; max-width: 240px; }
+  .tiles { display: flex; gap: 5px; align-items: flex-end; height: 64px; }
+  .tile { width: 40px; height: 28px; background: var(--tile); }
+  .slot { width: 40px; height: 28px; border: 1.5px dashed #a7ad9f; position: relative; }
+  .slot::after {
+    content: ""; position: absolute; left: 3px; top: -32px; width: 40px; height: 28px;
+    background: var(--tile-out); transform: rotate(-6deg);
+  }
+  .base { width: 220px; height: 6px; background: var(--band-muted); }
+  .fig-cap { margin-top: 6px; font-size: 11.5px; color: var(--band-muted); }
+  .byline { margin: 20px 0 0; font-size: 13.5px; color: var(--band-muted); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 
   .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    min-height: 48px;
-    padding: 10px 22px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 15px;
-    text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 48px; padding: 10px 22px;
+    font-weight: 700; font-size: 15px; text-decoration: none;
     border: 1.5px solid transparent;
   }
-  .btn-primary { background: var(--accent); color: var(--accent-text); }
-  .btn-ghost { border-color: rgba(255,255,255,0.35); color: var(--deep-text); }
-  .btn-outline { border-color: var(--accent); color: var(--accent); background: transparent; }
-  .btn:focus-visible { outline: 3px solid #f2b33d; outline-offset: 2px; }
+  .btn-light { background: var(--band-text); color: #262a27; }
+  .btn-line { border-color: var(--band-muted); color: var(--band-text); }
+  .btn-accent { background: var(--accent); color: var(--btn-text); }
+  .btn-outline { border-color: var(--accent); color: var(--accent); }
+  .btn:focus-visible { outline: 3px solid var(--tile-out); outline-offset: 2px; }
 
-  /* ---------- Sections ---------- */
-  section { padding: 44px 0 8px; }
+  /* ---------- 本文 ---------- */
+  section { padding: 36px 0 4px; }
   h2 {
-    font-size: 22px;
-    line-height: 1.5;
-    margin: 0 0 16px;
-    padding-left: 14px;
-    border-left: 4px solid var(--accent);
+    margin: 0 0 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule-strong);
+    font-size: 19px; line-height: 1.5; font-weight: 700;
   }
-  p { margin: 0 0 16px; }
+  h2 .num { color: var(--accent); margin-right: 10px; font-size: 15px; }
+  p { margin: 0 0 14px; color: var(--body); }
   .note { color: var(--muted); font-size: 14.5px; }
 
-  .cards { display: grid; gap: 14px; grid-template-columns: 1fr; margin: 20px 0 18px; }
-  @media (min-width: 640px) { .cards { grid-template-columns: 1fr 1fr; } }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 20px 20px 6px;
-  }
-  .card .num {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    color: var(--accent);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-  }
-  .card h3 { margin: 2px 0 8px; font-size: 17.5px; line-height: 1.5; }
-  .card p { font-size: 15px; }
+  .grid2 { display: grid; grid-template-columns: 1fr; column-gap: 28px; }
+  @media (min-width: 640px) { .grid2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .item { padding: 12px 0; border-top: 1px solid var(--rule); }
+  .item:last-child { border-bottom: 1px solid var(--rule); }
+  @media (min-width: 640px) { .grid2 .item:nth-last-child(2) { border-bottom: 1px solid var(--rule); } }
+  .item-label { font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); }
+  .item-body { font-size: 15px; line-height: 1.75; margin-top: 2px; color: var(--body); }
 
-  .callout {
-    background: var(--accent-soft);
-    border-radius: 12px;
-    padding: 16px 18px;
-    margin: 6px 0 16px;
-    font-size: 15px;
-  }
+  .steps { list-style: none; margin: 14px 0 12px; padding: 0; border-top: 1px solid var(--rule); }
+  .steps li { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .steps .n { flex-shrink: 0; width: 28px; color: var(--accent); font-size: 14px; padding-top: 2px; }
+  .steps h3 { margin: 0; font-size: 16px; }
+  .steps p { margin: 2px 0 0; font-size: 14.5px; color: var(--muted); }
 
-  /* 手順 */
-  .steps { list-style: none; margin: 20px 0 16px; padding: 0; counter-reset: s; }
-  .steps li {
-    position: relative;
-    padding: 0 0 22px 52px;
-  }
-  .steps li::before {
-    counter-increment: s;
-    content: counter(s);
-    position: absolute; left: 0; top: 0;
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 2px solid var(--accent);
-    color: var(--accent);
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-weight: 500;
-    display: grid; place-items: center;
-    font-size: 15px;
-  }
-  .steps li::after {      /* 縦のつなぎ線 */
-    content: "";
-    position: absolute; left: 16px; top: 36px; bottom: 2px;
-    width: 2px; background: var(--line);
-  }
-  .steps li:last-child::after { display: none; }
-  .steps h3 { margin: 2px 0 4px; font-size: 16.5px; }
-  .steps p { margin: 0; font-size: 15px; color: var(--muted); }
+  .plain { margin: 6px 0 14px; padding-left: 1.2em; color: var(--body); }
+  .plain li { margin-bottom: 4px; }
 
-  .not-list { margin: 8px 0 16px; padding-left: 1.2em; }
-  .not-list li { margin-bottom: 6px; }
-
-  /* 参加・問い合わせ */
-  .join {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 24px 20px 22px;
-    margin-top: 18px;
-  }
-  .status {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 13.5px; font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-  .status::before {
-    content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
-  }
-  .want { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 18px; padding: 0; list-style: none; }
-  .want li {
-    font-size: 14px;
-    padding: 4px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: var(--bg);
-  }
-  .join-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .join { background: var(--panel); padding: 22px 20px 20px; margin-top: 6px; }
+  .status { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; }
+  .join .actions { margin-top: 16px; }
 
   footer {
-    margin-top: 56px;
-    padding: 24px 0 40px;
-    border-top: 1px solid var(--line);
-    font-size: 13.5px;
-    color: var(--muted);
+    margin-top: 48px; padding: 18px 0 36px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px; color: var(--muted);
   }
-  footer p { margin: 0 0 6px; }
+  footer p { margin: 0 0 4px; color: var(--muted); }
 </style>
 </head>
 <body>
 
-<header class="hero">
+<header class="band">
   <div class="wrap">
-    <span class="tag">STUDENT-LED RESEARCH · 2026</span>
-    <h1>宇宙船の<em>「熱を防ぐ部品」</em>を、<br>もっと交換しやすく。</h1>
-    <p class="sub">交換式熱防護システム(TPS)の固定・締結構造に関する研究</p>
-    <p class="lead">再使用する宇宙輸送機では、熱から機体を守る部品を、飛行後に点検・修理・交換しやすくすることが重要です。この研究では、部品そのものの断熱性能だけでなく、部品を機体につなぐ部分と、部品どうしの境目にある締結・接合部分に着目します。</p>
-    <p class="byline">学生主体の自主研究 ｜ 企画代表 <strong>瀧本 弁</strong>(兵庫県立大学 理学部 物質科学科)</p>
-    <div class="hero-actions">
-      <!-- PDFのファイル名が違う場合はここを書き換え -->
-      <a class="btn btn-primary" href="member-guide.pdf">企画説明書を読む(PDF)</a>
-      <a class="btn btn-ghost" href="#join">参加・問い合わせ</a>
+    <div class="band-top">
+      <strong>研究メンバー募集</strong>
+      <span class="mono">2026.10</span>
+    </div>
+    <div class="band-main">
+      <div class="band-title">
+        <div class="label">研究題目</div>
+        <h1>交換式熱防護システム(TPS)<br class="br-wide">における固定・締結構造の<br class="br-wide">研究開発</h1>
+      </div>
+      <div class="fig" aria-hidden="true">
+        <div class="tiles">
+          <div class="tile"></div><div class="tile"></div><div class="slot"></div><div class="tile"></div><div class="tile"></div>
+        </div>
+        <div class="base"></div>
+        <div class="fig-cap">図1 交換式TPSカートリッジ(模式図)</div>
+      </div>
+    </div>
+    <p class="byline">学生主体の自主研究 ／ 企画代表 瀧本 弁(兵庫県立大学 理学部 物質科学科)</p>
+    <div class="actions">
+      <a class="btn btn-light" href="member-guide.pdf">企画説明書を読む(PDF)</a>
+      <a class="btn btn-line" href="#join">参加・問い合わせ</a>
     </div>
   </div>
 </header>
@@ -237,46 +185,45 @@
 <main class="wrap">
 
   <section>
-    <h2>なぜ、この研究が必要なのか</h2>
+    <h2><span class="num mono">01</span>研究の背景</h2>
     <p>宇宙輸送機が地球の大気圏に戻るとき、機体は非常に強い熱を受けます。熱防護システム(TPS)は、その熱から機体の内部構造を守るためのものです。宇宙輸送機を繰り返し使うには、機体が耐えられるだけでなく、飛行後の整備にかかる時間や費用を減らすことも大切です。</p>
     <p>そこで、熱を防ぐ部品を必要に応じて一つずつ取り外せる「カートリッジ式」にする考え方があります。傷んだ部分だけを交換できれば、整備を効率化できる可能性があります。</p>
     <p class="note">交換式TPS自体は新しい発明ではなく、NASAなどによる研究の蓄積があります。</p>
   </section>
 
   <section>
-    <h2>研究の中心は、2つの「つなぎ方」</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="num">01</div>
-        <h3>機体に取り付ける固定部</h3>
-        <p>カートリッジを機体にしっかり保持しつつ、必要なときには外せる仕組みです。ただし、ねじや支えなどの固定具が熱の通り道になる可能性があります。保持する強さ、熱の伝わりにくさ、重量、交換のしやすさを一緒に考えます。</p>
+    <h2><span class="num mono">02</span>研究の対象</h2>
+    <div class="grid2">
+      <div class="item">
+        <div class="item-label">機体に取り付ける固定部</div>
+        <div class="item-body">カートリッジを機体にしっかり保持しつつ、必要なときには外せる仕組みです。ねじや支えなどの固定具が熱の通り道になる可能性があるため、保持する強さ、熱の伝わりにくさ、重量、交換のしやすさをあわせて検討します。</div>
       </div>
-      <div class="card">
-        <div class="num">02</div>
-        <h3>区画間の締結・接合部</h3>
-        <p>隣り合うカートリッジの境目や、構造どうしが接する部分も重要です。接合部の形や構成によっては、そこから熱が内部に入り込む可能性があります。具体的な構造は今後決めます。</p>
+      <div class="item">
+        <div class="item-label">区画間の締結・接合部</div>
+        <div class="item-body">隣り合うカートリッジの境目や、構造どうしが接する部分です。接合部の形や構成によっては、そこから熱が内部に入り込む可能性があります。具体的な構造は今後決めます。</div>
       </div>
     </div>
-    <div class="callout">例えば、固定を強くするために部品を大きくすれば、重くなったり熱が伝わりやすくなったりするかもしれません。研究の焦点は、一つの性能だけを良くするのではなく、複数の条件の両立を考えることです。</div>
+    <p class="note" style="margin-top: 14px;">固定を強くするために部品を大きくすると、重くなったり熱が伝わりやすくなったりする場合があります。一つの性能だけでなく、複数の条件の両立を検討します。</p>
   </section>
 
   <section>
-    <h2>どのように研究を進めるのか</h2>
+    <h2><span class="num mono">03</span>研究の進め方</h2>
     <p>固定・締結構造を複数考え、条件をそろえて比較し、どの違いが性能に影響するのかを説明することが目標です。理論的な計算と小規模な実験を組み合わせ、結果を踏まえて構造を改良します。</p>
     <ol class="steps">
-      <li><h3>調べ、条件を決める</h3><p>過去の研究を調べ、評価したい項目(熱の入りにくさ、保持性能、交換しやすさ、重量など)と研究条件を決めます。</p></li>
-      <li><h3>構造を考える</h3><p>複数の固定・締結方法を考案し、熱の伝わり方や力のかかり方を理論的に検討します。</p></li>
-      <li><h3>実験環境を確かめる</h3><p>加熱装置や温度測定方法を整え、測定の確かさと再現性を確認します。</p></li>
-      <li><h3>基準となる部品を確かめる</h3><p>共通の模擬カートリッジを製作し、それ自体の基本的な断熱性能を先に検証します。</p></li>
-      <li><h3>比較し、改良する</h3><p>固定・締結構造を変えた試験片を作り、温度変化などを比較します。必要に応じて設計を見直します。</p></li>
-      <li><h3>結果をまとめる</h3><p>得られた成果と限界を整理し、後続の研究に活用できる技術報告書にします。</p></li>
+      <li><span class="n mono">1</span><div><h3>調べ、条件を決める</h3><p>過去の研究を調べ、評価したい項目(熱の入りにくさ、保持性能、交換しやすさ、重量など)と研究条件を決めます。</p></div></li>
+      <li><span class="n mono">2</span><div><h3>構造を考える</h3><p>複数の固定・締結方法を考案し、熱の伝わり方や力のかかり方を理論的に検討します。</p></div></li>
+      <li><span class="n mono">3</span><div><h3>実験環境を確かめる</h3><p>加熱装置や温度測定方法を整え、測定の確かさと再現性を確認します。</p></div></li>
+      <li><span class="n mono">4</span><div><h3>基準となる部品を確かめる</h3><p>共通の模擬カートリッジを製作し、それ自体の基本的な断熱性能を先に検証します。</p></div></li>
+      <li><span class="n mono">5</span><div><h3>比較し、改良する</h3><p>固定・締結構造を変えた試験片を作り、温度変化などを比較します。必要に応じて設計を見直します。</p></div></li>
+      <li><span class="n mono">6</span><div><h3>結果をまとめる</h3><p>得られた成果と限界を整理し、後続の研究に活用できる技術報告書にします。</p></div></li>
     </ol>
     <p class="note">初期段階では、小さな模擬カートリッジの片側をバーナーなどで加熱し、反対側の温度変化や締結部周辺の熱の伝わり方を測る方法を検討しています。</p>
   </section>
 
   <section>
-    <h2>この研究で、まだ目指さないこと</h2>
-    <ul class="not-list">
+    <h2><span class="num mono">04</span>研究の範囲</h2>
+    <p>次の内容は、本研究の対象外です。</p>
+    <ul class="plain">
       <li>実際の宇宙船の製造や、新しい断熱材料の開発</li>
       <li>大気圏再突入時の環境の完全な再現</li>
       <li>試験した条件を超えて「実機にもそのまま使える」と主張すること</li>
@@ -284,28 +231,37 @@
   </section>
 
   <section>
-    <h2>どんな成果を残したいのか</h2>
-    <p>一つは、決めた条件に合う固定・締結構造の提案。もう一つは、なぜその構造がよいのか、どの条件では弱点があるのかを、実験と理論から説明できる知見です。成果は英語の技術報告書にまとめ、設計図・データ・解析コードも公開できる範囲で残す予定です。</p>
+    <h2><span class="num mono">05</span>成果物</h2>
+    <p>一つは、決めた条件に合う固定・締結構造の提案です。もう一つは、なぜその構造がよいのか、どの条件では弱点があるのかを、実験と理論から説明できる知見です。成果は英語の技術報告書にまとめ、設計図・データ・解析コードも公開できる範囲で残す予定です。</p>
     <p class="note">研究の進み具合や公開できる成果は、このページで順次お知らせします。</p>
   </section>
 
   <!-- ===== 募集セクション:募集を締め切ったら、この中だけ書き換え ===== -->
   <section id="join">
-    <h2>参加・問い合わせ</h2>
+    <h2><span class="num mono">06</span>参加・問い合わせ</h2>
     <div class="join">
       <div class="status">メンバー募集中</div>
-      <p>学部生を中心とした学生主体の研究です。現在、所属学部を問わず一緒に取り組むメンバーを募集しています。専門知識は、研究を進めながら一緒に身につけていけば大丈夫です。</p>
-      <p style="margin-bottom:8px;">特に、次のようなことに興味・経験がある人を歓迎します。</p>
-      <ul class="want">
-        <li>電装・回路</li>
-        <li>温度計測・データ収集</li>
-        <li>加工・ものづくり</li>
-        <li>熱・構造の計算</li>
-      </ul>
-      <p class="note">参加希望については、現在の活動体制を踏まえて相談・調整します。質問だけ・話を聞いてみたいだけでも歓迎です。</p>
-      <div class="join-actions">
-        <!-- ここをGoogleフォームのURLに書き換え -->
-        <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLScXO6vqNIZG94241oe2YK1vxKCDIKHlGU37Vn-7KrdSfD5HKQ/viewform" target="_blank" rel="noopener">フォームから連絡する</a>
+      <div class="grid2" style="margin-bottom: 4px;">
+        <div class="item">
+          <div class="item-label">募集対象</div>
+          <div class="item-body">学部・学年は問いません。専門知識は、研究を進めながら身につけていく前提です。</div>
+        </div>
+        <div class="item">
+          <div class="item-label">歓迎する経験</div>
+          <div class="item-body">電装・回路/温度計測・データ収集/加工・製作/熱・構造の計算</div>
+        </div>
+        <div class="item">
+          <div class="item-label">活動</div>
+          <div class="item-body">週1回程度の会議を予定しています。試験期間中は休止します。</div>
+        </div>
+        <div class="item">
+          <div class="item-label">期間</div>
+          <div class="item-body">約1年を予定しています。</div>
+        </div>
+      </div>
+      <p class="note" style="margin-top: 14px;">参加希望については、現在の活動体制を踏まえて相談・調整します。質問のみのお問い合わせも受け付けています。</p>
+      <div class="actions">
+        <a class="btn btn-accent" href="https://docs.google.com/forms/d/e/1FAIpQLScXO6vqNIZG94241oe2YK1vxKCDIKHlGU37Vn-7KrdSfD5HKQ/viewform" target="_blank" rel="noopener">フォームから連絡する</a>
         <a class="btn btn-outline" href="member-guide.pdf">企画説明書(PDF)</a>
       </div>
     </div>
